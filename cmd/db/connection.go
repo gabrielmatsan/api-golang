@@ -25,17 +25,12 @@ type DBConnectionConfig struct {
 	MaxIdleTime  time.Duration
 }
 
-// LoadDatabaseConfig carrega as configurações do banco de dados a partir das variáveis de ambiente.
 func LoadDatabaseConfig() *DBConnectionConfig {
-	// strconv.Atoi retorna 0 e um erro se a conversão falhar. 0 é um valor de porta inválido,
-	// então é bom para o padrão caso a variável não esteja definida ou seja inválida.
 	portStr := os.Getenv("DB_PORT")
 	port, err := strconv.Atoi(portStr)
 	if err != nil {
-		// Se houver um erro na conversão (ex: string vazia, não é um número),
-		// loga o erro e define uma porta padrão.
 		log.Printf("AVISO: Erro ao converter a porta do banco de dados '%s': %v. Usando porta padrão 5432.", portStr, err)
-		port = 5432 // Porta padrão do PostgreSQL
+		port = 5432
 	}
 
 	return &DBConnectionConfig{
@@ -52,7 +47,6 @@ func LoadDatabaseConfig() *DBConnectionConfig {
 	}
 }
 
-// DatabaseURL constrói a URL de conexão (DSN) para o PostgreSQL.
 func (c *DBConnectionConfig) DatabaseURL() string {
 	// Formato DSN comum para PostgreSQL:
 	// "host=localhost port=5432 user=user password=password dbname=database sslmode=disable"
@@ -67,13 +61,12 @@ func NewDbConnection(config DBConnectionConfig) (*sqlx.DB, error) {
 		return nil, fmt.Errorf("erro ao conectar ao banco de dados: %w", err)
 	}
 
-	// Configurações do pool de conexões para otimização
 	db.SetMaxOpenConns(config.MaxOpenConns)
 	db.SetMaxIdleConns(config.MaxIdleConns)
 	db.SetConnMaxLifetime(config.MaxLifetime)
 	db.SetConnMaxIdleTime(config.MaxIdleTime)
 
-	// Opcional: Ping para verificar a conexão imediatamente
+	// Ping para verificar a conexão imediatamente
 	if err = db.Ping(); err != nil {
 		return nil, fmt.Errorf("erro ao fazer ping no banco de dados: %w", err)
 	}
