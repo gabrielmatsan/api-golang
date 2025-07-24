@@ -1,0 +1,97 @@
+# Binários compilados
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+main
+api-go
+dist/
+build/
+
+# Arquivos de teste e debug
+*.test
+*.prof
+*.out
+coverage.txt
+__debug_bin*
+
+# Dependências vendor (será baixado no container)
+vendor/
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS específicos
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs e temporários
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker files (evita recursão)
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# README e documentação
+README.md
+*.md
+docs/
+LICENSE
+CHANGELOG.md
+
+# Arquivos de configuração local
+config.local.yml
+config.local.json
+.air.toml
+
+# Node.js (caso tenha frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Go workspace
+go.work
+go.work.sum
+
+# Arquivos de CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Kubernetes
+k8s/
+kubernetes/
+*.yaml
+*.yml
