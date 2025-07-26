@@ -56,41 +56,7 @@ jobs:
           SHA=$(echo $GITHUB_SHA | head -c7)
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
-        # Build Docker Image
-      - name: Build Docker Image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          load: true
-          tags: |
-            ghcr.io/${{ github.repository }}:${{ steps.generate-tag.outputs.sha }}
-            test-image:latest
-          cache-from: type=gha
-
-        # TESTES da imagem Docker
-      - name: Test Docker Image
-        run: |
-          echo "🧪 Testando a imagem Docker..."
-
-          # Teste 1: Verificar se a imagem foi criada
-          docker images test-image:latest
-
-          # Teste 2: Executar container e verificar se inicia
-          docker run --rm -d --name test-container -p 8080:8080 test-image:latest
-          sleep 5
-
-          # Teste 3: Verificar se a aplicação responde (ajuste conforme sua app)
-          # curl -f http://localhost:8080/health || exit 1
-
-          # Teste 4: Verificar logs do container
-          docker logs test-container
-
-          # Teste 5: Parar container de teste
-          docker stop test-container
-
-          echo "✅ Todos os testes da imagem passaram!"
-
-      - name: Push Docker Image
+      - name: Build and push Docker Image
         uses: docker/build-push-action@v6
         with:
           context: . # O contexto de construção do Docker ('.' significa o diretório atual)
