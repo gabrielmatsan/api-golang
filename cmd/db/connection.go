@@ -73,3 +73,11 @@ func NewDbConnection(config DBConnectionConfig) (*sqlx.DB, error) {
 
 	return db, nil
 }
+
+func GetDB() *sqlx.DB {
+	db, err := NewDbConnection(*LoadDatabaseConfig())
+	if err != nil {
+		log.Fatalf("Erro ao conectar ao banco de dados: %v", err)
+	}
+	return db
+}
