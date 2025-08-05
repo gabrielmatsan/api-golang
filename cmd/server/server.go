@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gabrielmatsan/teste-api/internal/user/routes"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jmoiron/sqlx"
@@ -44,6 +45,15 @@ func (s *Server) SetupRoutes() {
 			"time":    time.Now().Format(time.RFC3339),
 		})
 	})
+	s.router.Route("/api/v1", func(r chi.Router) {
+		routes.UserRoutes(r)
+	})
+
+	chi.Walk(s.router, func(method string, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
+		log.Printf("Rota registrada: %s %s", method, route)
+		return nil
+	})
+
 }
 
 // Start inicia o servidor HTTP.
