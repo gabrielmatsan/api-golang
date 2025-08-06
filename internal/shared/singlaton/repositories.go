@@ -8,15 +8,14 @@ import (
 )
 
 var (
-	userRepositoryInstance *repository.UserRepository
-	userRepositoryOnce     sync.Once
+	userRepository     *repository.UserRepository
+	userRepositoryOnce sync.Once
 )
 
 func GetUserRepository() *repository.UserRepository {
 	userRepositoryOnce.Do(func() {
 
-		database := db.GetDB()
-		userRepositoryInstance = repository.NewUserRepository(database)
+		userRepository = repository.NewUserRepository(db.GetDB())
 	})
-	return userRepositoryInstance
+	return userRepository
 }

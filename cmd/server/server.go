@@ -11,6 +11,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jmoiron/sqlx"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 type Server struct {
@@ -48,6 +49,9 @@ func (s *Server) SetupRoutes() {
 	s.router.Route("/api/v1", func(r chi.Router) {
 		routes.UserRoutes(r)
 	})
+	s.router.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:8080/swagger/doc.json"), // URL completa
+	))
 
 	chi.Walk(s.router, func(method string, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
 		log.Printf("Rota registrada: %s %s", method, route)

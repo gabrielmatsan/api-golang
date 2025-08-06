@@ -74,6 +74,7 @@ func NewDbConnection(config DBConnectionConfig) (*sqlx.DB, error) {
 	return db, nil
 }
 
+// GetDB retorna uma instância única do banco de dados.
 func GetDB() *sqlx.DB {
 	db, err := NewDbConnection(*LoadDatabaseConfig())
 	if err != nil {
