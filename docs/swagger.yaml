@@ -1,0 +1,119 @@
+basePath: /api/v1
+definitions:
+  model.CreateUser:
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - firstName
+    - lastName
+    - password
+    type: object
+  model.Role:
+    enum:
+    - admin
+    - user
+    type: string
+    x-enum-varnames:
+    - RoleAdmin
+    - RoleUser
+  model.Status:
+    enum:
+    - active
+    - inactive
+    type: string
+    x-enum-varnames:
+    - StatusActive
+    - StatusInactive
+  model.User:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: string
+      lastName:
+        type: string
+      password:
+        type: string
+      role:
+        $ref: '#/definitions/model.Role'
+      status:
+        $ref: '#/definitions/model.Status'
+      updatedAt:
+        type: string
+    required:
+    - createdAt
+    - email
+    - firstName
+    - id
+    - lastName
+    - password
+    - role
+    - status
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: API de usuários desenvolvida em Go com Chi router
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: API Golang
+  version: "1.0"
+paths:
+  /api/v1/users:
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo usuário no sistema
+      parameters:
+      - description: Dados do usuário a ser criado
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateUser'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Usuário criado com sucesso
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Formato JSON inválido
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Email já está sendo usado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Erro interno do servidor
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Criar um novo usuário
+      tags:
+      - users
+swagger: "2.0"

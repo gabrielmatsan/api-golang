@@ -41,7 +41,9 @@ func (r *UserRepository) CreateUser(ctx context.Context, dataUser *model.CreateU
 func (r *UserRepository) GetUserByEmail(ctx context.Context, email string) (*model.User, error) {
 
 	query := `
-		SELECT * FROM users WHERE email = $1
+		SELECT *
+		FROM users
+		WHERE email = $1
 	`
 
 	var user model.User
@@ -56,5 +58,3 @@ func (r *UserRepository) GetUserByEmail(ctx context.Context, email string) (*mod
 
 	return &user, nil
 }
-
-//func (r *UserRepository) GetUserByID(ctx context.Context, id string) (*model.User, error) {}

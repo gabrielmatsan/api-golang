@@ -8,6 +8,8 @@ import (
 func UserRoutes(r chi.Router) {
 	userController := infra.GetUserController()
 
+
+	
 	r.Route("/users", func(r chi.Router) {
 		r.Post("/", userController.CreateUser)
 	})

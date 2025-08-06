@@ -7,13 +7,13 @@ import (
 
 	"github.com/gabrielmatsan/teste-api/cmd/db"
 	"github.com/gabrielmatsan/teste-api/cmd/server"
+	_ "github.com/gabrielmatsan/teste-api/docs"
 	"github.com/joho/godotenv"
 )
 
-
-// @title Swagger Example API
+// @title API Golang
 // @version 1.0
-// @description This is a sample server Petstore server.
+// @description API de usuários desenvolvida em Go com Chi router
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
@@ -24,7 +24,7 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host localhost:8080
-// @BasePath /v1
+// @BasePath /api/v1
 func main() {
 
 	fmt.Println("=== INICIO DO MAIN ===")

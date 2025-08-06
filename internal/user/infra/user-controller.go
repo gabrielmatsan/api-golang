@@ -15,6 +15,18 @@ func NewUserController() *UserController {
 	return &UserController{}
 }
 
+// CreateUser godoc
+// @Summary      Criar um novo usuário
+// @Description  Cria um novo usuário no sistema
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Param        user  body      model.CreateUser  true  "Dados do usuário a ser criado"
+// @Success      201   {object}  model.User        "Usuário criado com sucesso"
+// @Failure      400   {object}  map[string]string "Formato JSON inválido"
+// @Failure      409   {object}  map[string]string "Email já está sendo usado"
+// @Failure      500   {object}  map[string]string "Erro interno do servidor"
+// @Router       /api/v1/users [post]
 func (uc *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var createUserModel model.CreateUser
 
