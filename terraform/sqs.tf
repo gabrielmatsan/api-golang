@@ -49,6 +49,28 @@ module "sqs" {
 }
 
 
+# Política para SQS
+resource "aws_iam_policy" "sqs_policy" {
+  name        = "email-consumer-sqs-policy"
+  description = "Policy for SQS access from Lambda"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:GetQueueAttributes"
+        ],
+        Effect   = "Allow",
+        Resource = module.sqs.queue_arn
+      }
+    ]
+  })
+}
+
+
 output "sqs_queue_id" {
   description = "URL da fila SQS"
   value       = module.sqs.queue_id

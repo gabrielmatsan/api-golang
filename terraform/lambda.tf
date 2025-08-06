@@ -48,27 +48,6 @@ resource "aws_lambda_function" "email_consumer" {
   }
 }
 
-# Política para SQS
-resource "aws_iam_policy" "sqs_policy" {
-  name        = "email-consumer-sqs-policy"
-  description = "Policy for SQS access from Lambda"
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = [
-          "sqs:ReceiveMessage",
-          "sqs:DeleteMessage",
-          "sqs:GetQueueAttributes"
-        ],
-        Effect   = "Allow",
-        Resource = module.sqs.queue_arn
-      }
-    ]
-  })
-}
-
 # Política para SES (envio de e-mails)
 resource "aws_iam_policy" "ses_policy" {
   name        = "email-consumer-ses-policy"
