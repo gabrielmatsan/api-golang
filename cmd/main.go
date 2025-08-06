@@ -1,3 +1,6 @@
+//go:build !docs
+// +build !docs
+
 package main
 
 import (
@@ -7,7 +10,6 @@ import (
 
 	"github.com/gabrielmatsan/teste-api/cmd/db"
 	"github.com/gabrielmatsan/teste-api/cmd/server"
-	_ "github.com/gabrielmatsan/teste-api/docs"
 	"github.com/joho/godotenv"
 )
 

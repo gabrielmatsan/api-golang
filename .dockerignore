@@ -95,3 +95,7 @@ k8s/
 kubernetes/
 *.yaml
 *.yml
+
+
+# Ignorar documentação
+docs/
