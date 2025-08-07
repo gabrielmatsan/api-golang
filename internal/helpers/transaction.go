@@ -26,5 +26,6 @@ func WithTransaction(ctx context.Context, fn func(*sqlx.Tx) error) error {
 		}
 	}()
 
-	return fn(tx)
+	err = fn(tx) // if error is not nil, rollback the transaction, else commit the transaction
+	return err
 }
