@@ -17,7 +17,7 @@ func NewUserRepository(db *sqlx.DB) *UserRepository {
 	return &UserRepository{db: db}
 }
 
-func (r *UserRepository) CreateUser(ctx context.Context, dataUser *model.CreateUser) (model.User, error) {
+func (r *UserRepository) CreateUser(ctx context.Context, dataUser *model.CreateUser, tx *sqlx.Tx) (model.User, error) {
 
 	id := cuid2.Generate()
 
@@ -27,9 +27,16 @@ func (r *UserRepository) CreateUser(ctx context.Context, dataUser *model.CreateU
 		RETURNING *
 	`
 
+	args := []any{id, dataUser.FirstName, dataUser.LastName, dataUser.Email, dataUser.Password, "user", "active"}
+
 	var user model.User
 
-	err := r.db.GetContext(ctx, &user, query, id, dataUser.FirstName, dataUser.LastName, dataUser.Email, dataUser.Password, "user", "active")
+	var err error
+	if tx != nil {
+		err = tx.GetContext(ctx, &user, query, args...)
+	} else {
+		err = r.db.GetContext(ctx, &user, query, args...)
+	}
 
 	if err != nil {
 		return model.User{}, err
@@ -54,6 +61,7 @@ func (r *UserRepository) GetUserByEmail(ctx context.Context, email string) (*mod
 		if err == sql.ErrNoRows {
 			return nil, nil
 		}
+		return nil, err
 	}
 
 	return &user, nil

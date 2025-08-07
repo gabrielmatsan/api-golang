@@ -26,6 +26,7 @@ type User struct {
 	Status    Status     `json:"status" db:"status" validate:"required"`
 	CreatedAt time.Time  `json:"createdAt" db:"created_at" validate:"required"`
 	UpdatedAt *time.Time `json:"updatedAt" db:"updated_at" validate:"omitempty"`
+	IsActive  bool       `json:"isActive" db:"is_active" validate:"required"`
 }
 
 type CreateUser struct {
